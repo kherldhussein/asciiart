@@ -3,19 +3,40 @@ package main
 import "testing"
 
 func TestPrintArt(t *testing.T) {
-	type args struct {
-		str     string
-		asciMap [][]string
-	}
 	tests := []struct {
-		name string
-		args args
+		name      string
+		input     string
+		asciMap   [][]string
+		expectErr bool
 	}{
-		// TODO: Add test cases.
+		{
+			name:      "Empty string",
+			input:     "",
+			asciMap:   nil,
+			expectErr: false,
+		},
+		{
+			name:      "Newline escape sequence",
+			input:     "\\n",
+			asciMap:   nil,
+			expectErr: false,
+		},
+		{
+			name:      "Unsupported escape sequence",
+			input:     "\\t",
+			asciMap:   nil,
+			expectErr: true,
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			PrintArt(tt.args.str, tt.args.asciMap)
+			err := PrintArt(tt.input, tt.asciMap)
+			if tt.expectErr && err == nil {
+				t.Errorf("Expected an error but got none")
+			}
+			if !tt.expectErr && err != nil {
+				t.Errorf("Unexpected error: %v", err)
+			}
 		})
 	}
 }
