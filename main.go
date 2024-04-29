@@ -23,11 +23,6 @@ func main() {
 	}
 	err = PrintArt(args[0], asciMap)
 	if err != nil {
-		log.Fatal("unsupported escape sequence")
+		log.Printf("Error: %v \n", err)
 	}
 }
-
-// TODO
-// 2 \n
-
-// Test
