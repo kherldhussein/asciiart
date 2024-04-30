@@ -26,10 +26,12 @@ func ReadASCIIMapFromFile(filename string) ([][]string, error) {
 	if !strings.HasSuffix(filename, ".txt") {
 		return nil, fmt.Errorf("unsupported file format: %s", filename)
 	}
+
 	file, err := os.Open(filename)
 	if err != nil {
 		return nil, fmt.Errorf("error opening file: %w", err)
 	}
+
 	defer file.Close()
 	var (
 		asciMap  [][]string
