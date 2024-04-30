@@ -1,28 +1,40 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
-	"os"
 )
 
+var formats = map[string]string{
+	"s":  "standard.txt",
+	"t":  "thinkertoy.txt",
+	"sh": "shadow.txt",
+}
+
 func main() {
-	args := os.Args[1:]
-	asciMap, err := ReadASCIIMapFromFile("standard.txt")
+	formatPtr := flag.String("f", "s", "Output format: s (standard), t (thinkertoy), sh (shadow)")
+	flag.Parse()
+
+	filename, ok := formats[*formatPtr]
+	if !ok {
+		log.Fatalf("Invalid format specified: %s", *formatPtr)
+	}
+
+	asciMap, err := ReadASCIIMapFromFile(filename)
 	if err != nil {
-		fmt.Println("Error reading ASCII map:", err)
+		log.Fatalf("Error reading ASCII map: %v", err)
+	}
+
+	args := flag.Args()
+	if len(args) != 1 {
+		fmt.Println("Please provide exactly one input string.")
 		return
 	}
-	if len(args) < 1 {
-		fmt.Println("Please provide an input string.")
-		return
-	}
-	if len(args) > 1 {
-		fmt.Println("Too many arguments passed")
-		return
-	}
-	err = PrintArt(args[0], asciMap)
+	input := args[0]
+
+	err = PrintArt(input, asciMap)
 	if err != nil {
-		log.Printf("Error: %v \n", err)
+		log.Printf("Error: %v", err)
 	}
 }
