@@ -21,6 +21,7 @@ func printWord(word string, asciMap [][]string) error {
 }
 
 func PrintArt(str string, asciMap [][]string) error {
+	num := 0
 	switch str {
 	case "":
 		fmt.Print()
@@ -39,13 +40,19 @@ func PrintArt(str string, asciMap [][]string) error {
 		words := strings.Split(s, "\n")
 		for _, word := range words {
 			if word == "" {
-				fmt.Println()
-				continue
-			}
+					num ++
+				if num < len(words) {
+						fmt.Println()
+				}else {
+						continue
+				}
+				
+			} else {
 			err := printWord(word, asciMap)
 			if err != nil {
 				return err
 			}
+	}
 		}
 	}
 	return nil
