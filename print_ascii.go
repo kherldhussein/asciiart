@@ -37,14 +37,19 @@ func PrintArt(str string, asciMap [][]string) error {
 		s = strings.ReplaceAll(s, "\\b", "\b")
 		s = strings.ReplaceAll(s, "\\a", "\a")
 		words := strings.Split(s, "\n")
+		num := 0
 		for _, word := range words {
 			if word == "" {
-				fmt.Println()
-				continue
-			}
-			err := printWord(word, asciMap)
-			if err != nil {
-				return err
+				num++
+				if num < len(words) {
+					fmt.Println()
+					continue
+				}
+			} else {
+				err := printWord(word, asciMap)
+				if err != nil {
+					return err
+				}
 			}
 		}
 	}
