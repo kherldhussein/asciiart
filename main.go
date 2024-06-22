@@ -35,6 +35,12 @@ func main() {
 		return
 	}
 
+	err := DownloadFile(filename)
+	if err != nil {
+		log.Printf("Error downloading file: %v", err)
+		return
+	}
+
 	asciiMap, err := ReadASCIIMapFromFile(filename)
 	if err != nil {
 		log.Fatalf("Error reading ASCII map: %v", err)
