@@ -37,24 +37,6 @@ func ReadASCIIMapFromFile(filename string) ([][]string, error) {
 		asciMap  [][]string
 		asciLine []string
 	)
-	files, err := file.Stat()
-	if err != nil {
-		return nil, fmt.Errorf("error getting file stat %v", err)
-	}
-	switch filename {
-	case "standard":
-		if files.Size() != ExpectedSize[filename] {
-			return nil, fmt.Errorf("file size mismatch for %s", filename)
-		}
-	case "shadow":
-		if files.Size() != ExpectedSize[filename] {
-			return nil, fmt.Errorf("file size mismatch for %s", filename)
-		}
-	case "thinkertoy":
-		if files.Size() != ExpectedSize[filename] {
-			return nil, fmt.Errorf("file size mismatch for %s", filename)
-		}
-	}
 
 	scanner := bufio.NewScanner(file)
 	count := 0
@@ -68,9 +50,7 @@ func ReadASCIIMapFromFile(filename string) ([][]string, error) {
 			asciLine = []string{}
 		}
 	}
-	if len(asciMap) != 95 {
-		return nil, fmt.Errorf("unexpected number of objects in %s", filename)
-	}
+
 	if err := scanner.Err(); err != nil {
 		return nil, fmt.Errorf("error scanning file: %w", err)
 	}
