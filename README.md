@@ -62,10 +62,14 @@ $
 - `shadow.txt`: Shadowed ASCII character set
 - `thinkertoy.txt`: ASCII character set with thinkertoy style
 
+## File Integrity Verification
+
+This program ensures file integrity using SHA-256 checksums. When downloading or verifying files (standard.txt, shadow.txt, thinkertoy.txt), it calculates the checksum of the downloaded file and compares it with a pre-defined expected checksum (expectedChecksum map). If the checksums do not match, it indicates that the file has been tampered with or corrupted.
+
 ## Contributing
 
 If you have suggestions for improvements, bug fixes, or new features, feel free to open an issue or submit a pull request.
 
 ## Author
 
-This project was build and maintained by  [Kherld Hussein](https://learn.zone01kisumu.ke/git/khahussein)
+This project was build and maintained by  [Kherld Hussein](https://github.com/kherldhussein)
