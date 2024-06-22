@@ -7,12 +7,6 @@ import (
 	"os"
 )
 
-var ExpectedSize = map[string]int64{
-	"standard.txt":   6623,
-	"shadow.txt":     7463,
-	"thinkertoy.txt": 5558,
-}
-
 func DownloadFile(file string) error {
 	url := ""
 	switch file {
@@ -25,13 +19,7 @@ func DownloadFile(file string) error {
 	default:
 		return fmt.Errorf("unsupported file name: %s", file)
 	}
-	// Check and handle corrupted file
-	err := validateFileSize(file)
-	if err != nil {
-		return fmt.Errorf("error checking and handling corrupted file: %w", err)
-	}
 
-	// Proceed with download if file doesn't exist or is corrupted
 	res, err := http.Get(url)
 	if err != nil {
 		return fmt.Errorf("failed to fetch URL: %w", err)
@@ -54,26 +42,5 @@ func DownloadFile(file string) error {
 	}
 
 	fmt.Println("Downloaded", file, "from", url)
-	return nil
-}
-
-func validateFileSize(file string) error {
-	if _, err := os.Stat(file); err == nil {
-		stat, err := os.Stat(file)
-		if err != nil {
-			return fmt.Errorf("failed to get file stat: %w", err)
-		}
-		if size, ok := ExpectedSize[file]; ok {
-			if stat.Size() == size {
-				fmt.Println("File", file, "already exists and is valid.")
-				return nil
-			} else {
-				fmt.Println("File", file, "exists but is corrupted (size mismatch), deleting...")
-				if err := os.Remove(file); err != nil {
-					return fmt.Errorf("failed to delete corrupted file: %w", err)
-				}
-			}
-		}
-	}
 	return nil
 }
