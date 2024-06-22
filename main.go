@@ -1,9 +1,9 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
-	"os"
 )
 
 var banners = map[string]string{
@@ -13,7 +13,9 @@ var banners = map[string]string{
 }
 
 func main() {
-	args := os.Args[1:]
+	checkIntegrity := flag.Bool("checksum", false, "Check integrity of specified file")
+	flag.Parse()
+	args := flag.Args()
 
 	if len(args) == 0 {
 		fmt.Println("Please provide at least one argument.")
@@ -35,9 +37,18 @@ func main() {
 		return
 	}
 
-	err := DownloadFile(filename)
+	if *checkIntegrity {
+		err := ValidateFileChecksum(filename)
+		if err != nil {
+			log.Fatalf("Error checking integrity: %v", err)
+		}
+		fmt.Printf("Integrity check passed for file: %s\n", filename)
+		return
+	}
+
+	err := ValidateFileChecksum(filename)
 	if err != nil {
-		log.Printf("Error downloading file: %v", err)
+		log.Printf("Error downloading or validating file: %v", err)
 		return
 	}
 
