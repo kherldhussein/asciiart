@@ -73,3 +73,7 @@ If you have suggestions for improvements, bug fixes, or new features, feel free 
 ## Author
 
 This project was build and maintained by  [Kherld Hussein](https://github.com/kherldhussein)
+
+## License
+
+[MIT](https://github.com/kherldhussein/asciiart/blob/master/LICENSE)
