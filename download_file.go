@@ -11,11 +11,11 @@ func DownloadFile(file string) error {
 	url := ""
 	switch file {
 	case "standard.txt":
-		url = "https://learn.zone01kisumu.ke/git/root/public/raw/branch/master/subjects/ascii-art/standard.txt"
+		url = "https://github.com/kherldhussein/asciiart/raw/master/standard.txt"
 	case "shadow.txt":
-		url = "https://learn.zone01kisumu.ke/git/root/public/raw/branch/master/subjects/ascii-art/shadow.txt"
+		url = "https://github.com/kherldhussein/asciiart/raw/master/shadow.txt"
 	case "thinkertoy.txt":
-		url = "https://learn.zone01kisumu.ke/git/root/public/raw/branch/master/subjects/ascii-art/thinkertoy.txt"
+		url = "https://github.com/kherldhussein/asciiart/raw/master/thinkertoy.txt"
 	default:
 		return fmt.Errorf("unsupported file name: %s", file)
 	}
