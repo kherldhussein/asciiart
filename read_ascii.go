@@ -18,7 +18,7 @@ func validateFileName(file string) bool {
 	return ok
 }
 
-func ReadASCIIMapFromFile(filename string) ([][]string, error) {
+func ReadAscii(filename string) ([][]string, error) {
 	if !validateFileName(filename) {
 		return nil, fmt.Errorf("unsupported file name: %s", filename)
 	}
@@ -34,8 +34,8 @@ func ReadASCIIMapFromFile(filename string) ([][]string, error) {
 
 	defer file.Close()
 	var (
-		asciMap  [][]string
-		asciLine []string
+		asciiArtGrid [][]string
+		asciLine     []string
 	)
 
 	scanner := bufio.NewScanner(file)
@@ -45,7 +45,7 @@ func ReadASCIIMapFromFile(filename string) ([][]string, error) {
 		asciLine = append(asciLine, lines)
 		count++
 		if count == 9 {
-			asciMap = append(asciMap, asciLine)
+			asciiArtGrid = append(asciiArtGrid, asciLine)
 			count = 0
 			asciLine = []string{}
 		}
@@ -54,5 +54,5 @@ func ReadASCIIMapFromFile(filename string) ([][]string, error) {
 	if err := scanner.Err(); err != nil {
 		return nil, fmt.Errorf("error scanning file: %w", err)
 	}
-	return asciMap, nil
+	return asciiArtGrid, nil
 }

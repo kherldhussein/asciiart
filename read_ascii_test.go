@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func TestReadASCIIMapFromFile(t *testing.T) {
+func TestReadAscii(t *testing.T) {
 	type args struct {
 		filename string
 	}
@@ -17,7 +17,7 @@ func TestReadASCIIMapFromFile(t *testing.T) {
 	}{}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			got, err := ReadASCIIMapFromFile(tt.args.filename)
+			got, err := ReadAscii(tt.args.filename)
 			if (err != nil) != tt.wantErr {
 				t.Errorf("ReadASCIIMapFromFile() error = %v, wantErr %v", err, tt.wantErr)
 				return

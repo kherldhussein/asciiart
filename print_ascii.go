@@ -5,14 +5,14 @@ import (
 	"strings"
 )
 
-func printWord(word string, asciMap [][]string) error {
+func printWord(word string, asciiArtGrid [][]string) error {
 	for i := 1; i <= 8; i++ {
 		for _, char := range word {
 			index := int(char - 32)
-			if index < 0 || index >= len(asciMap) {
+			if index < 0 || index >= len(asciiArtGrid) {
 				return fmt.Errorf("unknown character: %q", char)
 			} else {
-				fmt.Print(asciMap[index][i])
+				fmt.Print(asciiArtGrid[index][i])
 			}
 		}
 		fmt.Println()
@@ -20,7 +20,7 @@ func printWord(word string, asciMap [][]string) error {
 	return nil
 }
 
-func PrintArt(str string, asciMap [][]string) error {
+func PrintArt(str string, asciiArtGrid [][]string) error {
 	switch str {
 	case "":
 		fmt.Print()
@@ -46,7 +46,7 @@ func PrintArt(str string, asciMap [][]string) error {
 					continue
 				}
 			} else {
-				err := printWord(word, asciMap)
+				err := printWord(word, asciiArtGrid)
 				if err != nil {
 					return err
 				}

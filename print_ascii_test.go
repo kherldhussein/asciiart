@@ -5,7 +5,7 @@ import (
 )
 
 func TestPrintArt(t *testing.T) {
-	asciMap, err := ReadASCIIMapFromFile("standard.txt")
+	asciMap, err := ReadAscii("standard.txt")
 	if err != nil {
 		t.Errorf("Error reading ASCII map: %v", err)
 		return
