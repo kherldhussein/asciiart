@@ -13,12 +13,13 @@ var banners = map[string]string{
 }
 
 func main() {
-	checkIntegrity := flag.Bool("checksum", false, "Check integrity of specified file")
+	checksum := flag.Bool("checksum", false, "Check integrity of specified file")
+	outputFile := flag.String("output", "", "Output file name e.g output.txt")
 	flag.Parse()
 	args := flag.Args()
 
 	if len(args) == 0 {
-		fmt.Println("Please provide at least one argument.")
+		PrintError()
 		return
 	}
 
@@ -37,7 +38,7 @@ func main() {
 		return
 	}
 
-	if *checkIntegrity {
+	if *checksum {
 		err := ValidateFileChecksum(filename)
 		if err != nil {
 			log.Fatalf("Error checking integrity: %v", err)
@@ -52,13 +53,31 @@ func main() {
 		return
 	}
 
-	asciiMap, err := ReadASCIIMapFromFile(filename)
+	asciiArtGrid, err := ReadAscii(filename)
 	if err != nil {
 		log.Fatalf("Error reading ASCII map: %v", err)
 	}
 
-	err = PrintArt(input, asciiMap)
+	output, err := WriteArt(input, asciiArtGrid)
 	if err != nil {
 		log.Printf("Error: %v", err)
+		return
 	}
+
+	if *outputFile != "" {
+		err = WriteAscii(*outputFile, output)
+		if err != nil {
+			log.Fatalf("Error writing to output file: %v", err)
+		}
+	} else {
+		err = PrintArt(input, asciiArtGrid)
+		if err != nil {
+			log.Printf("Error: %v", err)
+		}
+	}
+}
+
+func PrintError() {
+	fmt.Println("Usage: go run . [OPTION] [STRING] [BANNER]")
+	fmt.Println("EX: go run . --output=<fileName.txt> something standard")
 }
